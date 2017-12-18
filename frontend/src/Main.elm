@@ -5,12 +5,15 @@ import Bootstrap.Card as Card
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
+import Bootstrap.Grid.Row as Row
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Modal as Modal
 import Bootstrap.Navbar as Navbar
+import Css exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
+import Html.Styled.Attributes exposing (css)
 import Navigation exposing (Location)
 import UrlParser exposing ((</>))
 
@@ -104,7 +107,7 @@ routeParser =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ class "h-100" ]
         [ CDN.stylesheet
         , menu model
         , mainContent model
@@ -123,7 +126,7 @@ menu model =
 
 mainContent : Model -> Html Msg
 mainContent model =
-    Grid.container [] <|
+    Grid.containerFluid [ class "h-100" ] <|
         case model.page of
             Home ->
                 pageHome model
@@ -140,8 +143,7 @@ mainContent model =
 
 pageHome : Model -> List (Html Msg)
 pageHome model =
-    [ h1 [] [ text "Home" ]
-    , Grid.row []
+    [ Grid.row [ Row.attrs [ class "mt-3" ] ]
         [ Grid.col []
             [ Card.config [ Card.outlinePrimary ]
                 |> Card.headerH4 [] [ text "Getting started" ]
@@ -151,18 +153,6 @@ pageHome model =
                         Button.linkButton
                             [ Button.primary, Button.attrs [ href "#getting-started" ] ]
                             [ text "Start" ]
-                    ]
-                |> Card.view
-            ]
-        , Grid.col []
-            [ Card.config [ Card.outlineDanger ]
-                |> Card.headerH4 [] [ text "Modules" ]
-                |> Card.block []
-                    [ Card.text [] [ text "Check out the modules overview" ]
-                    , Card.custom <|
-                        Button.linkButton
-                            [ Button.primary, Button.attrs [ href "#modules" ] ]
-                            [ text "Module" ]
                     ]
                 |> Card.view
             ]
