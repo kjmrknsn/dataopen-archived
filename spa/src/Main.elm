@@ -107,7 +107,7 @@ routeParser =
 
 view : Model -> Html Msg
 view model =
-    div [ class "h-100" ]
+    div [ class "h-100 bg-faded" ]
         [ CDN.stylesheet
         , menu model
         , mainContent model
