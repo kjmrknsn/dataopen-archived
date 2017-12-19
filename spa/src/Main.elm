@@ -121,6 +121,9 @@ menu model =
         |> Navbar.withAnimation
         |> Navbar.inverse
         |> Navbar.brand [ href "#" ] [ text "Data Open" ]
+        |> Navbar.customItems
+            [ Navbar.customItem button [] [ text "x" ]
+            ]
         |> Navbar.view model.navState
 
 
