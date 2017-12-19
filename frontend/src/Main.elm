@@ -145,14 +145,11 @@ pageHome : Model -> List (Html Msg)
 pageHome model =
     [ Grid.row [ Row.attrs [ class "mt-3" ] ]
         [ Grid.col []
-            [ Card.config [ Card.outlinePrimary ]
-                |> Card.headerH4 [] [ text "Getting started" ]
+            [ Card.config [ Card.attrs [ class "rounded-0" ] ]
                 |> Card.block []
-                    [ Card.text [] [ text "Getting started is real easy. Just click the start button." ]
-                    , Card.custom <|
-                        Button.linkButton
-                            [ Button.primary, Button.attrs [ href "#getting-started" ] ]
-                            [ text "Start" ]
+                    [ Card.titleH2 [] [ text "Data Open" ]
+                    , Card.text []
+                        [ text "Data Open is a web-based collaborative data analysis platform. Users can extract, analyze and visualize data by writing Spark application code and submitting it to a Hadoop cluster. Analysis results can be shared with others as a form of a notebook." ]
                     ]
                 |> Card.view
             ]
