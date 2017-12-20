@@ -1,0 +1,4 @@
+# Configuration for the HTTP server.
+[http]
+addr = "localhost:8080"
+num_threads = 4

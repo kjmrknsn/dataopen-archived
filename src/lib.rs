@@ -1,9 +1,15 @@
 //! # Data Open
 //! Collaborative Data Analysis Platform
 
+extern crate argparse;
 extern crate chrono;
 extern crate iron;
 extern crate router;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+extern crate serde_json;
+extern crate toml;
 
 /// Utilities for logging
 pub mod log;
