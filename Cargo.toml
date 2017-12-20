@@ -6,6 +6,7 @@ description = "Collaborative Data Analysis Platform"
 license = "MIT/Apache-2.0"
 
 [dependencies]
+chrono = "0.4"
 iron = "0.6"
 router = "0.6"
 
