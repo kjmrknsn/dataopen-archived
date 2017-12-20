@@ -84,7 +84,7 @@ impl<T> ToString for AccessLog<T>
             self.method,
             self.path,
             self.status,
-            self.error,
+            log::escape_tab(&self.error),
         )
     }
 }
