@@ -6,6 +6,8 @@ pub mod args;
 pub mod chain;
 /// Configuration
 pub mod config;
+/// Handler
+pub mod handler;
 /// HTTP server
 pub mod server;
 /// Router
