@@ -5,7 +5,7 @@ use router::Router;
 pub fn new() -> Router {
     let mut router = Router::new();
 
-    router.get("/a/b/c", hello_world, "index");
+    router.get("/", hello_world, "index");
 
     router
 }
