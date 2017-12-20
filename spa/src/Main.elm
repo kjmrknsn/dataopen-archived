@@ -116,7 +116,7 @@ menu model =
         |> Navbar.inverse
         |> Navbar.brand [ href "#" ] [ text "Data Open" ]
         |> Navbar.customItems
-            [ Navbar.customItem (Button.button [ Button.success, Button.attrs [ class "cursor-pointer", role "button" ] ] [ text "Sign In" ])
+            [ Navbar.customItem (Button.button [ Button.outlineSuccess, Button.attrs [ class "cursor-pointer", role "button" ] ] [ text "Sign In" ])
             ]
         |> Navbar.view model.navState
 
