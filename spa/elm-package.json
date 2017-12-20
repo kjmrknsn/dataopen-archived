@@ -1,6 +1,6 @@
 {
     "version": "0.0.0",
-    "summary": "Single Page Application of Data Open",
+    "summary": "Data Open SPA",
     "repository": "https://github.com/dataopen/dataopen.git",
     "license": "MIT/Apache-2.0",
     "source-directories": [

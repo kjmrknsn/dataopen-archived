@@ -6,3 +6,8 @@ description = "Collaborative Data Analysis Platform"
 license = "MIT/Apache-2.0"
 
 [dependencies]
+iron = "0.6"
+
+[[bin]]
+name = "dataopen-web"
+path = "src/bin/web.rs"
