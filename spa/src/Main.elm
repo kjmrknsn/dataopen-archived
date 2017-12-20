@@ -34,7 +34,6 @@ type alias Model =
 type Page
     = Home
     | GettingStarted
-    | NotFound
 
 
 init : Location -> ( Model, Cmd Msg )
@@ -81,7 +80,7 @@ urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
 urlUpdate location model =
     case decode location of
         Nothing ->
-            ( { model | page = NotFound }, Cmd.none )
+            ( { model | page = Home}, Cmd.none )
 
         Just route ->
             ( { model | page = route }, Cmd.none )
@@ -132,9 +131,6 @@ mainContent model =
             GettingStarted ->
                 pageGettingStarted model
 
-            NotFound ->
-                pageNotFound
-
 
 pageHome : Model -> List (Html Msg)
 pageHome model =
@@ -164,12 +160,6 @@ pageGettingStarted model =
         [ text "Click me" ]
     ]
 
-
-pageNotFound : List (Html Msg)
-pageNotFound =
-    [ h1 [] [ text "Not found" ]
-    , text "SOrry couldn't find that page"
-    ]
 
 
 modal : Model -> Html Msg
