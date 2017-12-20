@@ -28,7 +28,7 @@ impl<T: Handler> Handler for AccessLoggerHandler<T> {
         let start = Local::now();
         let res = self.handler.handle(req);
         let end = Local::now();
-        log::access(AccessLog::new(start, end, &res).to_string().as_str());
+        log::access(AccessLog::new(start, end, &req, &res).to_string().as_str());
         res
     }
 }
@@ -37,23 +37,32 @@ struct AccessLog<T>
     where T: TimeZone {
     start: DateTime<T>,
     end: DateTime<T>,
+    method: String,
+    path: String,
+    status: u16,
     error: String,
 }
 
 impl<T> AccessLog<T>
     where T: TimeZone {
-    fn new(start: DateTime<T>, end: DateTime<T>, res: &IronResult<Response>) -> Self {
-        match *res {
-            Ok(ref res) => AccessLog {
-                start,
-                end,
-                error: String::new(),
-            },
-            Err(ref err) => AccessLog {
-                start,
-                end,
-                error: format!("{}", err),
-            },
+    fn new(start: DateTime<T>, end: DateTime<T>, req: &Request, res: &IronResult<Response>) -> Self {
+        let (res, error) = match *res {
+            Ok(ref res) => (res, String::new()),
+            Err(ref err) => (&err.response, format!("{}", err)),
+        };
+
+        let status = match res.status {
+            Some(status) => status.to_u16(),
+            None => 0,
+        };
+
+        AccessLog {
+            start,
+            end,
+            method: req.method.to_string(),
+            path: String::from("/") + req.url.path().join("/").as_str(),
+            status,
+            error,
         }
     }
 }
@@ -61,7 +70,22 @@ impl<T> AccessLog<T>
 impl<T> ToString for AccessLog<T>
     where T: TimeZone {
     fn to_string(&self) -> String {
-        format!("start:{:?}\tend:{:?}\telapsed:{:?}\terror:{}", self.start, self.end, elapsed_milli(&self.start, &self.end), self.error)
+        format!(
+            "start:{:?}\t\
+            end:{:?}\t\
+            elapsed:{:?}\t\
+            method:{}\t\
+            path:{}\t\
+            status:{}\t\
+            error:{}",
+            self.start,
+            self.end,
+            elapsed_milli(&self.start, &self.end),
+            self.method,
+            self.path,
+            self.status,
+            self.error,
+        )
     }
 }
 
