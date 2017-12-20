@@ -1,21 +1,18 @@
-module Main exposing (main)
-
 import Bootstrap.Button as Button
 import Bootstrap.Card as Card
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
-import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Modal as Modal
 import Bootstrap.Navbar as Navbar
-import Css exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, div, h1, h2, text)
+import Html.Attributes exposing (class, href)
+import Html.Attributes.Aria exposing (role)
 import Html.Events exposing (onClick)
-import Html.Styled.Attributes exposing (css)
 import Navigation exposing (Location)
 import UrlParser exposing ((</>))
+
 
 main : Program Never Model Msg
 main =
@@ -37,7 +34,6 @@ type alias Model =
 type Page
     = Home
     | GettingStarted
-    | Modules
     | NotFound
 
 
@@ -101,7 +97,6 @@ routeParser =
     UrlParser.oneOf
         [ UrlParser.map Home UrlParser.top
         , UrlParser.map GettingStarted (UrlParser.s "getting-started")
-        , UrlParser.map Modules (UrlParser.s "modules")
         ]
 
 
@@ -122,7 +117,7 @@ menu model =
         |> Navbar.inverse
         |> Navbar.brand [ href "#" ] [ text "Data Open" ]
         |> Navbar.customItems
-            [ Navbar.customItem button [] [ text "x" ]
+            [ Navbar.customItem (Button.button [ Button.outlineSuccess, Button.attrs [ class "cursor-pointer", role "button" ] ] [ text "Sign In" ])
             ]
         |> Navbar.view model.navState
 
@@ -136,9 +131,6 @@ mainContent model =
 
             GettingStarted ->
                 pageGettingStarted model
-
-            Modules ->
-                pageModules model
 
             NotFound ->
                 pageNotFound
@@ -170,17 +162,6 @@ pageGettingStarted model =
         , Button.attrs [ onClick <| ModalMsg Modal.visibleState ]
         ]
         [ text "Click me" ]
-    ]
-
-
-pageModules : Model -> List (Html Msg)
-pageModules model =
-    [ h1 [] [ text "Modules" ]
-    , ListGroup.ul
-        [ ListGroup.li [] [ text "Alert" ]
-        , ListGroup.li [] [ text "Badge" ]
-        , ListGroup.li [] [ text "Card" ]
-        ]
     ]
 
 
