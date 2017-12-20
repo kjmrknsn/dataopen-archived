@@ -22,5 +22,5 @@ pub fn error(msg: &str) {
 }
 
 fn print(kind: &str, msg: &str) {
-    eprintln!("{} {} {}", Local::now(), kind, msg);
+    eprintln!("time:{}\tkind:{}\t{}", Local::now(), kind, msg);
 }
