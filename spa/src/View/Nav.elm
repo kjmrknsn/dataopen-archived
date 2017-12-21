@@ -2,17 +2,19 @@ module View.Nav exposing (view)
 
 import Html exposing (Html, a, button, div, nav, span, text, ul)
 import Html.Attributes exposing (attribute, class, href, id, type_)
+import Html.Events exposing (onClick)
 import Model.Model exposing (Model)
-import PackageInfo.Version
+import Model.Msg exposing (Msg(..))
+import Version exposing (version)
 
 
 -- VIEW
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view model =
     nav [ class "navbar navbar-expand-sm navbar-dark bg-dark" ]
         [ a [ class "navbar-brand", href "#" ] [ text "Data Open" ]
-        , span [ class "small text-secondary" ] [ text "version " ++ PackageInfo.Version.toString ]
+        , span [ class "small text-secondary" ] [ text ("version " ++ version) ]
         , button
             [ class "navbar-toggler"
             , type_ "button"

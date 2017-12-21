@@ -1,7 +1,10 @@
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Model.Model exposing (Model)
-import Navigation
+import Model.Msg exposing (Msg(..))
+import Model.Page exposing (Page(..))
+import Navigation exposing (Location)
+import UrlParser exposing ((</>))
 import View.MainContent as MainContent
 import View.Nav as Nav
 
@@ -15,30 +18,44 @@ main =
         }
 
 
-init : Navigation.Location -> (Model, Cmd Msg)
+init : Location -> (Model, Cmd Msg)
 init location =
-    ( Model
+    ( { page = Home }
     , Cmd.none
     )
-
-
--- UPDATE
-
-type Msg = UrlChange Navigation.Location
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
-        UrlChange location ->
-            ( model
-            , Cmd.none
-            )
+        UrlChange location -> urlUpdate location model
+
+
+urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
+urlUpdate location model =
+    case decode location of
+        Nothing ->
+            ( { model | page = Home }, Cmd.none )
+
+        Just route ->
+            ( { model | page = route }, Cmd.none )
+
+
+decode : Location -> Maybe Page
+decode location =
+    UrlParser.parseHash routeParser location
+
+
+routeParser : UrlParser.Parser (Page -> a) a
+routeParser =
+    UrlParser.oneOf
+        [ UrlParser.map Home UrlParser.top
+        ]
 
 
 -- VIEW
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view model =
     div [ class "h-100" ]
         [ Nav.view model
