@@ -29,7 +29,10 @@ view model =
             [ ul [ class "navbar-nav mr-auto" ] []
             , button
                 [ class "btn btn-outline-success"
-                , type_ "button" ]
+                , type_ "button"
+                , attribute "data-toggle" "modal"
+                , attribute "data-target" "#signInModal"
+                ]
                 [ text "Sign In" ]
             ]
         ]

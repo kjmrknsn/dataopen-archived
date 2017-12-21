@@ -6,6 +6,7 @@ import Model.Page exposing (Page(..))
 import Navigation exposing (Location)
 import UrlParser exposing ((</>))
 import View.MainContent as MainContent
+import View.Modal.SignIn as SignIn
 import View.Nav as Nav
 
 
@@ -29,6 +30,7 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         UrlChange location -> urlUpdate location model
+        SignIn -> (model, Cmd.none)
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -60,4 +62,5 @@ view model =
     div [ class "h-100" ]
         [ Nav.view model
         , MainContent.view model
+        , SignIn.view model
         ]
