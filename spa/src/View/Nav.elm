@@ -9,7 +9,7 @@ import Model.Model exposing (Model)
 
 view : Model -> Html msg
 view model =
-    nav [ class "navbar navbar-expand-lg navbar-dark bg-dark" ]
+    nav [ class "navbar navbar-expand-sm navbar-dark bg-dark" ]
         [ a [ class "navbar-brand", href "#" ] [ text "Data Open" ]
         , button
             [ class "navbar-toggler"

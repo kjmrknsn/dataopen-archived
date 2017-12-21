@@ -1,7 +1,8 @@
-import Html exposing (Attribute, Html, a, button, div, h1, li, nav, span, text, ul)
-import Html.Attributes exposing (attribute, class, href, id, type_)
+import Html exposing (Html, div)
+import Html.Attributes exposing (class)
 import Model.Model exposing (Model)
 import Navigation
+import View.MainContent as MainContent
 import View.Nav as Nav
 
 
@@ -39,6 +40,7 @@ update msg model =
 
 view : Model -> Html msg
 view model =
-    div []
+    div [ class "h-100" ]
         [ Nav.view model
+        , MainContent.view model
         ]
