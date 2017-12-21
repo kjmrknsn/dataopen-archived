@@ -2,8 +2,9 @@ module View.Modal.SignIn exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick, onInput)
 import Model.Model exposing (Model)
-import Model.Msg exposing (Msg)
+import Model.Msg exposing (Msg(..))
 
 
 view : Model -> Html Msg
@@ -44,6 +45,7 @@ view model =
                                 , id "userID"
                                 , placeholder "User ID"
                                 , attribute "autocomplete" "username"
+                                , onInput SignInFormUserID
                                 ] []
                             ]
                         , div [ class "form-group" ]
@@ -54,9 +56,14 @@ view model =
                                 , id "password"
                                 , placeholder "Password"
                                 , attribute "autocomplete" "current-password"
+                                , onInput SignInFormPassword
                                 ] []
                             ]
-                        , button [ type_ "button", class "btn btn-success" ] [ text "Sign In" ]
+                        , button
+                            [ type_ "button"
+                            , class "btn btn-success"
+                            , onClick SignIn
+                            ] [ text "Sign In" ]
                         ]
                     ]
                 ]

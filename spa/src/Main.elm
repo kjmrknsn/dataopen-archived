@@ -1,6 +1,9 @@
+import Json.Decode as Decode exposing (..)
+import Json.Encode as Encode exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
-import Model.Model exposing (Model)
+import Http
+import Model.Model exposing (Model, SignInForm)
 import Model.Msg exposing (Msg(..))
 import Model.Page exposing (Page(..))
 import Navigation exposing (Location)
@@ -21,7 +24,10 @@ main =
 
 init : Location -> (Model, Cmd Msg)
 init location =
-    ( { page = Home }
+    (
+    { page = Home
+    , signInForm = { userID = "", password = "" }
+    }
     , Cmd.none
     )
 
@@ -30,7 +36,26 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         UrlChange location -> urlUpdate location model
-        SignIn -> (model, Cmd.none)
+        SignInFormUserID userID ->
+            let
+                signInForm = model.signInForm
+                newSignInForm = { signInForm | userID = userID }
+            in
+                ({ model | signInForm = newSignInForm }, Cmd.none)
+        SignInFormPassword password ->
+            let
+                signInForm = model.signInForm
+                newSignInForm = { signInForm | password = password }
+            in
+                ({ model | signInForm = newSignInForm }, Cmd.none)
+        SignIn ->
+            (model, Http.send SignInResult (signIn model.signInForm))
+        SignInResult result ->
+            case result of
+                Ok _ ->
+                    (model, Cmd.none)
+                Err _ ->
+                    (model, Cmd.none)
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -53,6 +78,25 @@ routeParser =
     UrlParser.oneOf
         [ UrlParser.map Home UrlParser.top
         ]
+
+
+signInFormEncoder : SignInForm -> Encode.Value
+signInFormEncoder signInForm =
+    Encode.object
+        [ ("userID", Encode.string signInForm.userID)
+        , ("password", Encode.string signInForm.password)
+        ]
+
+
+signIn : SignInForm -> Http.Request Decode.Value
+signIn signInForm =
+    let
+        body =
+            signInForm
+                |> signInFormEncoder
+                |> Http.jsonBody
+    in
+        Http.post "/web/sign_in" body Decode.value
 
 
 -- VIEW
