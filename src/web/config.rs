@@ -9,6 +9,7 @@ pub struct Config {
     pub ldap: LDAP,
     pub http: HTTP,
     pub redis: Redis,
+    pub session: Session,
 }
 
 impl Key for Config {
@@ -41,5 +42,11 @@ pub struct HTTP {
 /// Configuration for Redis
 #[derive(Clone, Debug, Deserialize)]
 pub struct Redis {
-    pub url: String,
+    pub session_db_url: String,
+}
+
+/// Configuration for session
+#[derive(Clone, Debug, Deserialize)]
+pub struct Session {
+    pub ttl_sec: usize,
 }

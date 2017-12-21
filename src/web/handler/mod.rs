@@ -13,17 +13,17 @@ pub fn content_type() -> Header<ContentType> {
     Header(ContentType(Mime(TopLevel::Application, SubLevel::Json, vec![(Attr::Charset, mime::Value::Utf8)])))
 }
 
-pub fn set_cookie(sid: Option<&str>) -> Header<SetCookie> {
-    match sid {
-        Some(sid) => {
+pub fn set_cookie(sid: Option<&str>, ttl_sec: Option<usize>) -> Header<SetCookie> {
+    match (sid, ttl_sec) {
+        (Some(sid), Some(ttl_sec)) => {
             Header(SetCookie(vec![format!(
                 "{}={}; expires={}; path=/",
                 SID_COOKIE_NAME,
                 sid,
-                expires(Duration::days(7))
+                expires(Duration::seconds(ttl_sec as i64))
             )]))
         },
-        None => {
+        _ => {
             Header(SetCookie(vec![format!(
                 "{}=; expires={}; path=/",
                 SID_COOKIE_NAME,

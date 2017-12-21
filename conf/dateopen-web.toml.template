@@ -10,4 +10,8 @@ num_threads = 4
 
 # Configuration for Redis
 [redis]
-url = "redis://[:password@]hostname[:port][/db]"
+session_db_url = "redis://[:password@]hostname[:port][/db]"
+
+# Configuration for session
+[session]
+ttl_sec = 604800 # 7 days

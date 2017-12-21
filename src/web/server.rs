@@ -26,7 +26,7 @@ pub fn run() {
     );
 
     let iron = Iron {
-        handler: chain::new(&conf),
+        handler: chain::new(&conf, redis_client),
         timeouts: Timeouts::default(),
         threads: conf.http.num_threads,
     };

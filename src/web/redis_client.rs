@@ -3,7 +3,7 @@ use redis::Client;
 use super::config::Redis;
 
 pub struct RedisClient {
-    pub client: Client,
+    pub session: Client,
 }
 
 impl Key for RedisClient {
@@ -12,10 +12,10 @@ impl Key for RedisClient {
 
 impl RedisClient {
     pub fn new(conf: &Redis) -> Self {
-        let client = Client::open(conf.url.as_str()).unwrap();
+        let session = Client::open(conf.session_db_url.as_str()).unwrap();
 
         RedisClient {
-            client,
+            session,
         }
     }
 }
