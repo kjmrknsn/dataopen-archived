@@ -1,5 +1,5 @@
 /target/
 **/*.rs.bk
-/spa/elm-stuff/
 /spa/*.js
+/spa/elm-stuff/
 /work/
