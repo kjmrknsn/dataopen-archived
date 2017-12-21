@@ -1,7 +1,9 @@
 import Html exposing (Attribute, Html, a, button, div, h1, li, nav, span, text, ul)
 import Html.Attributes exposing (attribute, class, href, id, type_)
+import Model.Model exposing (Model)
 import Navigation
 import View.Nav as Nav
+
 
 main =
     Navigation.program UrlChange
@@ -12,16 +14,9 @@ main =
         }
 
 
--- MODEL
-
-type alias Model =
-    { history : List Navigation.Location
-    }
-
-
-init : Navigation.Location -> ( Model, Cmd Msg)
+init : Navigation.Location -> (Model, Cmd Msg)
 init location =
-    ( Model [ location ]
+    ( Model
     , Cmd.none
     )
 
@@ -35,7 +30,7 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         UrlChange location ->
-            ( { model | history = location :: model.history }
+            ( model
             , Cmd.none
             )
 
@@ -45,5 +40,5 @@ update msg model =
 view : Model -> Html msg
 view model =
     div []
-        [ Nav.view
+        [ Nav.view model
         ]
