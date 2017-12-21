@@ -23,7 +23,7 @@ pub fn run() {
     );
 
     let iron = Iron {
-        handler: chain::new(),
+        handler: chain::new(&conf),
         timeouts: Timeouts::default(),
         threads: conf.http.num_threads,
     };

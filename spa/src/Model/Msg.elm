@@ -8,7 +8,7 @@ import Navigation exposing (Location)
 
 type Msg
     = UrlChange Location
-    | SignInFormUserID String
+    | SignInFormUserId String
     | SignInFormPassword String
     | SignIn
     | SignInResult (Result Http.Error Decode.Value)

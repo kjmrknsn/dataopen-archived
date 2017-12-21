@@ -4,6 +4,8 @@
 extern crate argparse;
 extern crate chrono;
 extern crate iron;
+extern crate ldap3;
+extern crate persistent;
 extern crate router;
 extern crate serde;
 #[macro_use]

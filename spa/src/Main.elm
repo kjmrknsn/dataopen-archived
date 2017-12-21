@@ -26,7 +26,7 @@ init : Location -> (Model, Cmd Msg)
 init location =
     (
     { page = Home
-    , signInForm = { userID = "", password = "" }
+    , signInForm = { userId = "", password = "" }
     }
     , Cmd.none
     )
@@ -36,10 +36,10 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         UrlChange location -> urlUpdate location model
-        SignInFormUserID userID ->
+        SignInFormUserId userId ->
             let
                 signInForm = model.signInForm
-                newSignInForm = { signInForm | userID = userID }
+                newSignInForm = { signInForm | userId = userId }
             in
                 ({ model | signInForm = newSignInForm }, Cmd.none)
         SignInFormPassword password ->
@@ -83,7 +83,7 @@ routeParser =
 signInFormEncoder : SignInForm -> Encode.Value
 signInFormEncoder signInForm =
     Encode.object
-        [ ("userID", Encode.string signInForm.userID)
+        [ ("userId", Encode.string signInForm.userId)
         , ("password", Encode.string signInForm.password)
         ]
 

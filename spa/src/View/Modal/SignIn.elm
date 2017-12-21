@@ -38,14 +38,14 @@ view model =
                 , div [ class "modal-body" ]
                     [ Html.form []
                         [ div [ class "form-group" ]
-                            [ label [ for "userID" ] [ text "User ID" ]
+                            [ label [ for "userId" ] [ text "User Id" ]
                             , input
                                 [ type_ "text"
                                 , class "form-control"
-                                , id "userID"
-                                , placeholder "User ID"
+                                , id "userId"
+                                , placeholder "User Id"
                                 , attribute "autocomplete" "username"
-                                , onInput SignInFormUserID
+                                , onInput SignInFormUserId
                                 ] []
                             ]
                         , div [ class "form-group" ]
