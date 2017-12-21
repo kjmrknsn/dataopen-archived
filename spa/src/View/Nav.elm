@@ -13,8 +13,10 @@ import Version exposing (version)
 view : Model -> Html Msg
 view model =
     nav [ class "navbar navbar-expand-sm navbar-dark bg-dark" ]
-        [ a [ class "navbar-brand", href "#" ] [ text "Data Open" ]
-        , span [ class "small text-secondary" ] [ text ("version " ++ version) ]
+        [ div []
+            [ a [ class "navbar-brand", href "#" ] [ text "Data Open" ]
+            , span [ class "small text-secondary" ] [ text ("version " ++ version) ]
+            ]
         , button
             [ class "navbar-toggler"
             , type_ "button"
