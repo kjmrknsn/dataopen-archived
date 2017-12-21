@@ -7,3 +7,7 @@ user_dn = "uid={},ou=user,dc=company,dc=com"
 [http]
 addr = "localhost:8080"
 num_threads = 4
+
+# Configuration for Redis
+[redis]
+url = "redis://[:password@]hostname[:port][/db]"

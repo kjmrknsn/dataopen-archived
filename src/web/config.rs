@@ -8,6 +8,7 @@ use toml;
 pub struct Config {
     pub ldap: LDAP,
     pub http: HTTP,
+    pub redis: Redis,
 }
 
 impl Key for Config {
@@ -35,4 +36,10 @@ pub struct LDAP {
 pub struct HTTP {
     pub addr: String,
     pub num_threads: usize,
+}
+
+/// Configuration for Redis
+#[derive(Clone, Debug, Deserialize)]
+pub struct Redis {
+    pub url: String,
 }

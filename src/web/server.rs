@@ -3,6 +3,7 @@ use iron::prelude::*;
 use super::args::Args;
 use super::chain;
 use super::config::Config;
+use super::redis_client::RedisClient;
 use super::super::log;
 
 pub fn run() {
@@ -14,6 +15,8 @@ pub fn run() {
     }
 
     let conf = Config::from(&args.conf_path);
+
+    let redis_client = RedisClient::new(&conf.redis);
 
     log::info(&appname_version());
     log::info(&format!(
