@@ -28,7 +28,6 @@ impl Config {
 pub struct LDAP {
     pub url: String,
     pub user_dn: String,
-    pub group_dn: String,
 }
 
 /// Configuration for HTTP

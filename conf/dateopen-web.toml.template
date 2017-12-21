@@ -2,7 +2,6 @@
 [ldap]
 url = "ldap://example.com:389"
 user_dn = "uid={},ou=user,dc=company,dc=com"
-group_dn = "ou=group,dc=company,dc=com"
 
 # Configuration for the HTTP server.
 [http]

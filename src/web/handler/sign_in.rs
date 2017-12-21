@@ -7,6 +7,7 @@ use super::super::config::Config;
 use super::super::ldap;
 use super::super::string_error::StringError;
 use super::super::sign_in_form::SignInForm;
+use uuid::Uuid;
 
 pub fn h(req: &mut Request) -> IronResult<Response> {
     let mut body = String::new();
@@ -27,5 +28,12 @@ pub fn h(req: &mut Request) -> IronResult<Response> {
         return Err(IronError::new(StringError(format!("{}", err)), status::BadRequest))
     }
 
-    Ok(Response::with((status::Ok, super::content_type(), "{}")))
+    let sid = Uuid::new_v4().to_string();
+
+    Ok(Response::with((
+        status::Ok,
+        super::content_type(),
+        super::set_cookie(Some(&sid)),
+        "{}"
+    )))
 }
