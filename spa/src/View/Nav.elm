@@ -11,6 +11,7 @@ view : Model -> Html msg
 view model =
     nav [ class "navbar navbar-expand-sm navbar-dark bg-dark" ]
         [ a [ class "navbar-brand", href "#" ] [ text "Data Open" ]
+        , span [ class "small text-secondary" ] [ text "version 0.0.0" ]
         , button
             [ class "navbar-toggler"
             , type_ "button"
