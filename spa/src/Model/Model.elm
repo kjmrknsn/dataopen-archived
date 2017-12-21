@@ -13,4 +13,5 @@ type alias Model =
 type alias SignInForm =
     { userId : String
     , password : String
+    , alertHidden: Bool
     }

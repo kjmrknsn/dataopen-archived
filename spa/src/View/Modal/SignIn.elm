@@ -37,7 +37,13 @@ view model =
                     ]
                 , div [ class "modal-body" ]
                     [ Html.form []
-                        [ div [ class "form-group" ]
+                        [ div
+                            [ class "alert alert-danger"
+                            , attribute "role" "alert"
+                            , hidden model.signInForm.alertHidden
+                            ]
+                            [ text "Authetication failed. Please make sure that the user id and password are correct." ]
+                        , div [ class "form-group" ]
                             [ label [ for "userId" ] [ text "User Id" ]
                             , input
                                 [ type_ "text"

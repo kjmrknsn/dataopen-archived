@@ -26,7 +26,7 @@ init : Location -> (Model, Cmd Msg)
 init location =
     (
     { page = Home
-    , signInForm = { userId = "", password = "" }
+    , signInForm = { userId = "", password = "", alertHidden = True }
     }
     , Cmd.none
     )
@@ -55,7 +55,11 @@ update msg model =
                 Ok _ ->
                     (model, Cmd.none)
                 Err _ ->
-                    (model, Cmd.none)
+                    let
+                        signInForm = model.signInForm
+                        newSignInForm = { signInForm | alertHidden = False }
+                    in
+                        ({ model | signInForm = newSignInForm }, Cmd.none)
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
