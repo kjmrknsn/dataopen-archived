@@ -1,26 +1,26 @@
-module Model.NavConf exposing (..)
+module Model.NavbarConf exposing (..)
 
 
-type alias NavConf =
+type alias NavbarConf =
     { signInHidden : Bool
     , userIdHidden : Bool
     }
 
 
-new : NavConf
+new : NavbarConf
 new =
     { signInHidden = True
     , userIdHidden = True
     }
 
 
-signedIn : NavConf
+signedIn : NavbarConf
 signedIn =
     { signInHidden = True
     , userIdHidden = False
     }
 
-notSignedIn : NavConf
+notSignedIn : NavbarConf
 notSignedIn =
     { signInHidden = False
     , userIdHidden = True

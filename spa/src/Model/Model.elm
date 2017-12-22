@@ -1,6 +1,6 @@
 module Model.Model exposing (..)
 
-import Model.NavConf exposing (NavConf)
+import Model.NavbarConf exposing (NavbarConf)
 import Model.Page exposing (Page(..))
 import Model.SignInForm exposing (SignInForm)
 
@@ -9,7 +9,7 @@ type alias Model =
     { page : Page
     , signInForm : SignInForm
     , userId : String
-    , navConf : NavConf
+    , navbarConf : NavbarConf
     }
 
 new : Model
@@ -17,7 +17,7 @@ new =
     { page = Home
     , signInForm = Model.SignInForm.new
     , userId = ""
-    , navConf = Model.NavConf.new
+    , navbarConf = Model.NavbarConf.new
     }
 
 signedIn : Model -> String -> Model
@@ -25,7 +25,7 @@ signedIn model userId =
     { model
     | signInForm = Model.SignInForm.new
     , userId = userId
-    , navConf = Model.NavConf.signedIn
+    , navbarConf = Model.NavbarConf.signedIn
     }
 
 notSignedIn : Model -> Model
@@ -33,5 +33,5 @@ notSignedIn model =
     { model
     | signInForm = Model.SignInForm.new
     , userId = ""
-    , navConf = Model.NavConf.notSignedIn
+    , navbarConf = Model.NavbarConf.notSignedIn
     }

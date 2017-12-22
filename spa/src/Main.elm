@@ -7,14 +7,13 @@ import Html.Attributes exposing (class)
 import Http
 import Model.Model exposing (Model)
 import Model.Msg exposing (Msg(..))
-import Model.NavConf
 import Model.Page exposing (Page(..))
 import Model.SignInForm exposing (SignInForm)
 import Navigation exposing (Location)
 import UrlParser exposing ((</>))
 import View.MainContent as MainContent
 import View.Modal.SignIn as SignIn
-import View.Nav as Nav
+import View.Navbar as Navbar
 
 
 main =
@@ -118,7 +117,7 @@ decodeSession=
 view : Model -> Html Msg
 view model =
     div [ class "h-100" ]
-        [ Nav.view model
+        [ Navbar.view model
         , MainContent.view model
         , SignIn.view model
         ]
