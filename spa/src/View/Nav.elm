@@ -1,7 +1,7 @@
 module View.Nav exposing (view)
 
 import Html exposing (Html, a, button, div, nav, span, text, ul)
-import Html.Attributes exposing (attribute, class, href, id, type_)
+import Html.Attributes exposing (attribute, class, hidden, href, id, type_)
 import Html.Events exposing (onClick)
 import Model.Model exposing (Model)
 import Model.Msg exposing (Msg(..))
@@ -34,7 +34,13 @@ view model =
                 , type_ "button"
                 , attribute "data-toggle" "modal"
                 , attribute "data-target" "#signInModal"
+                , hidden model.signedIn
                 ]
                 [ text "Sign In" ]
+            , span
+                [ class "text-white"
+                , hidden (not model.signedIn)
+                ]
+                [ text model.userId ]
             ]
         ]

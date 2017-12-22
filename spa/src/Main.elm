@@ -30,7 +30,8 @@ init location =
     (
     { page = Home
     , signInForm = Model.SignInForm.new
-    , userId = Nothing
+    , signedIn = False
+    , userId = ""
     }
     , Cmd.none
     )
@@ -49,7 +50,12 @@ update msg model =
         SignInResult result ->
             case result of
                 Ok userId ->
-                    ({ model | signInForm = Model.SignInForm.new, userId = Just userId }, click "closeSignInModal")
+                    ({ model
+                        | signInForm = Model.SignInForm.new
+                        , signedIn = True
+                        , userId = userId
+                     }
+                    , click "closeSignInModal")
                 Err _ ->
                     ({ model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }, Cmd.none)
 
