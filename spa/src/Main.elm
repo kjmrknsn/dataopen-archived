@@ -46,19 +46,24 @@ update msg model =
         SignInResult result ->
             case result of
                 Ok userId ->
-                    ({ model
-                        | signInForm = Model.SignInForm.new
-                        , userId = userId
-                     }
-                    , click "closeSignInModal")
+                    ( Model.Model.signedIn model userId
+                    , click "closeSignInModal"
+                    )
                 Err _ ->
-                    ({ model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }, Cmd.none)
+                    ( { model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }
+                    , Cmd.none
+                    )
         GetSessionResult result ->
             case result of
                 Ok userId ->
-                    ({ model | userId = userId }, Cmd.none)
+                    ( Model.Model.signedIn model userId
+                    , Cmd.none
+                    )
                 Err _ ->
-                    (model, Cmd.none)
+                    ( Model.Model.notSignedIn model
+                    , Cmd.none
+                    )
+
 
 urlUpdate : Location -> Model -> ( Model, Cmd Msg )
 urlUpdate location model =

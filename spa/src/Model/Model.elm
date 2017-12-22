@@ -5,8 +5,6 @@ import Model.Page exposing (Page(..))
 import Model.SignInForm exposing (SignInForm)
 
 
--- MODEL
-
 type alias Model =
     { page : Page
     , signInForm : SignInForm
@@ -20,4 +18,20 @@ new =
     , signInForm = Model.SignInForm.new
     , userId = ""
     , navConf = Model.NavConf.new
+    }
+
+signedIn : Model -> String -> Model
+signedIn model userId =
+    { model
+    | signInForm = Model.SignInForm.new
+    , userId = userId
+    , navConf = Model.NavConf.signedIn
+    }
+
+notSignedIn : Model -> Model
+notSignedIn model =
+    { model
+    | signInForm = Model.SignInForm.new
+    , userId = ""
+    , navConf = Model.NavConf.notSignedIn
     }
