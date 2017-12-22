@@ -7,6 +7,7 @@ import Html.Attributes exposing (class)
 import Http
 import Model.Model exposing (Model)
 import Model.Msg exposing (Msg(..))
+import Model.NavConf
 import Model.Page exposing (Page(..))
 import Model.SignInForm exposing (SignInForm)
 import Navigation exposing (Location)
@@ -27,12 +28,7 @@ main =
 
 init : Location -> (Model, Cmd Msg)
 init location =
-    (
-    { page = Home
-    , signInForm = Model.SignInForm.new
-    , signedIn = False
-    , userId = ""
-    }
+    ( Model.Model.new
     , Cmd.none
     )
 
@@ -52,7 +48,6 @@ update msg model =
                 Ok userId ->
                     ({ model
                         | signInForm = Model.SignInForm.new
-                        , signedIn = True
                         , userId = userId
                      }
                     , click "closeSignInModal")

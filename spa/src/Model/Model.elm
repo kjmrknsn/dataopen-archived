@@ -1,6 +1,7 @@
-module Model.Model exposing (Model)
+module Model.Model exposing (..)
 
-import Model.Page exposing (Page)
+import Model.NavConf exposing (NavConf)
+import Model.Page exposing (Page(..))
 import Model.SignInForm exposing (SignInForm)
 
 
@@ -9,6 +10,14 @@ import Model.SignInForm exposing (SignInForm)
 type alias Model =
     { page : Page
     , signInForm : SignInForm
-    , signedIn : Bool
     , userId : String
+    , navConf : NavConf
+    }
+
+new : Model
+new =
+    { page = Home
+    , signInForm = Model.SignInForm.new
+    , userId = ""
+    , navConf = Model.NavConf.new
     }

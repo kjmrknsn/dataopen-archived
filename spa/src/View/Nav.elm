@@ -34,12 +34,12 @@ view model =
                 , type_ "button"
                 , attribute "data-toggle" "modal"
                 , attribute "data-target" "#signInModal"
-                , hidden model.signedIn
+                , hidden model.navConf.signInHidden
                 ]
                 [ text "Sign In" ]
             , span
                 [ class "text-white"
-                , hidden (not model.signedIn)
+                , hidden model.navConf.userIdHidden
                 ]
                 [ text model.userId ]
             ]
