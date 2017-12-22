@@ -6,6 +6,7 @@ use iron::mime::{Attr, Mime, TopLevel, SubLevel};
 use iron::modifiers::Header;
 use super::session::SID_COOKIE_NAME;
 
+pub mod session;
 pub mod sign_in;
 
 pub fn content_type() -> Header<ContentType> {

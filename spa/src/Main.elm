@@ -29,7 +29,7 @@ main =
 init : Location -> (Model, Cmd Msg)
 init location =
     ( Model.Model.new
-    , Cmd.none
+    , Http.send GetSessionResult getSession
     )
 
 
@@ -53,7 +53,12 @@ update msg model =
                     , click "closeSignInModal")
                 Err _ ->
                     ({ model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }, Cmd.none)
-
+        GetSessionResult result ->
+            case result of
+                Ok userId ->
+                    ({ model | userId = userId }, Cmd.none)
+                Err _ ->
+                    (model, Cmd.none)
 
 urlUpdate : Location -> Model -> ( Model, Cmd Msg )
 urlUpdate location model =
@@ -95,6 +100,10 @@ signIn signInForm =
     in
         Http.post "/web/sign_in" body decodeSession
 
+
+getSession : Http.Request String
+getSession =
+    Http.get "/web/session" decodeSession
 
 decodeSession: Decode.Decoder String
 decodeSession=

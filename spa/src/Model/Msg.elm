@@ -12,3 +12,4 @@ type Msg
     | SignInFormPassword String
     | SignIn
     | SignInResult (Result Http.Error String)
+    | GetSessionResult (Result Http.Error String)

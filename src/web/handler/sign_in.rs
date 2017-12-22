@@ -12,7 +12,7 @@ use super::super::sign_in_form::SignInForm;
 use super::super::string_error::StringError;
 use uuid::Uuid;
 
-pub fn h(req: &mut Request) -> IronResult<Response> {
+pub fn sign_in(req: &mut Request) -> IronResult<Response> {
     let mut body = String::new();
 
     if let Err(err) = req.body.read_to_string(&mut body) {
