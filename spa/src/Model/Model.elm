@@ -9,4 +9,5 @@ import Model.SignInForm exposing (SignInForm)
 type alias Model =
     { page : Page
     , signInForm : SignInForm
+    , userId : Maybe String
     }

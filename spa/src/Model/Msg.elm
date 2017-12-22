@@ -11,5 +11,5 @@ type Msg
     | SignInFormUserId String
     | SignInFormPassword String
     | SignIn
-    | SignInResult (Result Http.Error Decode.Value)
+    | SignInResult (Result Http.Error String)
 

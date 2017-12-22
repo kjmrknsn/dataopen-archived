@@ -6,6 +6,7 @@ pub mod handler;
 pub mod ldap;
 pub mod redis_client;
 pub mod server;
+pub mod session;
 pub mod sign_in_form;
 pub mod string_error;
 pub mod router;

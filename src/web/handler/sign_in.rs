@@ -7,8 +7,9 @@ use std::io::prelude::*;
 use super::super::config::Config;
 use super::super::ldap;
 use super::super::redis_client::RedisClient;
-use super::super::string_error::StringError;
+use super::super::session::Session;
 use super::super::sign_in_form::SignInForm;
+use super::super::string_error::StringError;
 use uuid::Uuid;
 
 pub fn h(req: &mut Request) -> IronResult<Response> {
@@ -47,10 +48,20 @@ pub fn h(req: &mut Request) -> IronResult<Response> {
         )
     }
 
+    let session = Session::new(sign_in_form.user_id.clone());
+
+    let session = match serde_json::to_string(&session) {
+        Ok(session) => session,
+        Err(err) => return Err(IronError::new(
+            StringError(format!("{}", err)),
+            status::InternalServerError)
+        ),
+    };
+
     Ok(Response::with((
         status::Ok,
         super::content_type(),
         super::set_cookie(Some(&sid), Some(conf.session.ttl_sec)),
-        "{}"
+        session
     )))
 }

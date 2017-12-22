@@ -30,6 +30,7 @@ init location =
     (
     { page = Home
     , signInForm = Model.SignInForm.new
+    , userId = Nothing
     }
     , Cmd.none
     )
@@ -47,8 +48,8 @@ update msg model =
             (model, Http.send SignInResult (signIn model.signInForm))
         SignInResult result ->
             case result of
-                Ok _ ->
-                    ({model | signInForm = Model.SignInForm.new }, click "closeSignInModal")
+                Ok userId ->
+                    ({ model | signInForm = Model.SignInForm.new, userId = Just userId }, click "closeSignInModal")
                 Err _ ->
                     ({ model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }, Cmd.none)
 
@@ -83,7 +84,7 @@ signInFormEncoder signInForm =
         ]
 
 
-signIn : SignInForm -> Http.Request Decode.Value
+signIn : SignInForm -> Http.Request String
 signIn signInForm =
     let
         body =
@@ -91,7 +92,12 @@ signIn signInForm =
                 |> signInFormEncoder
                 |> Http.jsonBody
     in
-        Http.post "/web/sign_in" body Decode.value
+        Http.post "/web/sign_in" body decodeSession
+
+
+decodeSession: Decode.Decoder String
+decodeSession=
+  Decode.at ["userId"] Decode.string
 
 
 view : Model -> Html Msg
