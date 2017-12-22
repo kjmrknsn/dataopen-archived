@@ -4,10 +4,9 @@ use iron::headers::{ContentType, SetCookie};
 use iron::mime;
 use iron::mime::{Attr, Mime, TopLevel, SubLevel};
 use iron::modifiers::Header;
+use super::session::SID_COOKIE_NAME;
 
 pub mod sign_in;
-
-const SID_COOKIE_NAME: &'static str = "_dataopen_sid";
 
 pub fn content_type() -> Header<ContentType> {
     Header(ContentType(Mime(TopLevel::Application, SubLevel::Json, vec![(Attr::Charset, mime::Value::Utf8)])))

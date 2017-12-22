@@ -1,6 +1,7 @@
 use chrono::prelude::*;
 use iron::{AroundMiddleware, Handler};
 use iron::prelude::*;
+use super::session::SessionBeforeHandler;
 use super::super::log;
 
 pub struct AccessLogger;
@@ -28,7 +29,9 @@ impl<T: Handler> Handler for AccessLoggerHandler<T> {
         let start = Local::now();
         let res = self.handler.handle(req);
         let end = Local::now();
+
         log::access(AccessLog::new(start, end, &req, &res).to_string().as_str());
+
         res
     }
 }
@@ -40,6 +43,7 @@ struct AccessLog<T>
     method: String,
     path: String,
     status: u16,
+    user_id: String,
     error: String,
 }
 
@@ -56,12 +60,18 @@ impl<T> AccessLog<T>
             None => 0,
         };
 
+        let user_id = match req.extensions.get::<SessionBeforeHandler>() {
+            Some(session) => session.user_id.clone(),
+            None => String::new(),
+        };
+
         AccessLog {
             start,
             end,
             method: req.method.to_string(),
             path: String::from("/") + req.url.path().join("/").as_str(),
             status,
+            user_id,
             error,
         }
     }
@@ -77,6 +87,7 @@ impl<T> ToString for AccessLog<T>
             method:{}\t\
             path:{}\t\
             status:{}\t\
+            user_id:{}\t\
             error:{}",
             self.start,
             self.end,
@@ -84,6 +95,7 @@ impl<T> ToString for AccessLog<T>
             self.method,
             self.path,
             self.status,
+            self.user_id,
             log::escape_tab(&self.error),
         )
     }
