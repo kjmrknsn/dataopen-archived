@@ -1,3 +1,5 @@
+port module Main exposing (..)
+
 import Json.Decode as Decode exposing (..)
 import Json.Encode as Encode exposing (..)
 import Html exposing (Html, div)
@@ -27,7 +29,6 @@ init : Location -> (Model, Cmd Msg)
 init location =
     (
     { page = Home
-    , showSignInModal = False
     , signInForm = Model.SignInForm.new
     }
     , Cmd.none
@@ -47,7 +48,7 @@ update msg model =
         SignInResult result ->
             case result of
                 Ok _ ->
-                    ({model | showSignInModal = False, signInForm = Model.SignInForm.new }, Navigation.modifyUrl "#")
+                    ({model | signInForm = Model.SignInForm.new }, click "closeSignInModal")
                 Err _ ->
                     ({ model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }, Cmd.none)
 
@@ -100,3 +101,5 @@ view model =
         , MainContent.view model
         , SignIn.view model
         ]
+
+port click : String -> Cmd msg

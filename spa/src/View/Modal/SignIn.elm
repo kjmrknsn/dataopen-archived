@@ -31,7 +31,10 @@ view model =
                         , attribute "data-dismiss" "modal"
                         , attribute "aria-label" "Close"
                         ]
-                        [ span [ attribute "aria-hidden" "true"]
+                        [ span
+                            [ attribute "aria-hidden" "true"
+                            , id "closeSignInModal"
+                            ]
                             [ text "×" ]
                         ]
                     ]

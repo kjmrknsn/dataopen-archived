@@ -8,6 +8,5 @@ import Model.SignInForm exposing (SignInForm)
 
 type alias Model =
     { page : Page
-    , showSignInModal: Bool
     , signInForm : SignInForm
     }
