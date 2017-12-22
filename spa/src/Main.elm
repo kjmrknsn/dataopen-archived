@@ -3,9 +3,10 @@ import Json.Encode as Encode exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Http
-import Model.Model exposing (Model, SignInForm)
+import Model.Model exposing (Model)
 import Model.Msg exposing (Msg(..))
 import Model.Page exposing (Page(..))
+import Model.SignInForm exposing (SignInForm)
 import Navigation exposing (Location)
 import UrlParser exposing ((</>))
 import View.MainContent as MainContent
@@ -26,7 +27,8 @@ init : Location -> (Model, Cmd Msg)
 init location =
     (
     { page = Home
-    , signInForm = { userId = "", password = "", alertHidden = True }
+    , showSignInModal = False
+    , signInForm = Model.SignInForm.new
     }
     , Cmd.none
     )
@@ -37,32 +39,20 @@ update msg model =
     case msg of
         UrlChange location -> urlUpdate location model
         SignInFormUserId userId ->
-            let
-                signInForm = model.signInForm
-                newSignInForm = { signInForm | userId = userId }
-            in
-                ({ model | signInForm = newSignInForm }, Cmd.none)
+            ({ model | signInForm = Model.SignInForm.updateUserId model.signInForm userId }, Cmd.none)
         SignInFormPassword password ->
-            let
-                signInForm = model.signInForm
-                newSignInForm = { signInForm | password = password }
-            in
-                ({ model | signInForm = newSignInForm }, Cmd.none)
+            ({ model | signInForm = Model.SignInForm.updatePassword model.signInForm password }, Cmd.none)
         SignIn ->
             (model, Http.send SignInResult (signIn model.signInForm))
         SignInResult result ->
             case result of
                 Ok _ ->
-                    (model, Cmd.none)
+                    ({model | showSignInModal = False, signInForm = Model.SignInForm.new }, Navigation.modifyUrl "#")
                 Err _ ->
-                    let
-                        signInForm = model.signInForm
-                        newSignInForm = { signInForm | alertHidden = False }
-                    in
-                        ({ model | signInForm = newSignInForm }, Cmd.none)
+                    ({ model | signInForm = Model.SignInForm.updateAlertHidden model.signInForm False }, Cmd.none)
 
 
-urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
+urlUpdate : Location -> Model -> ( Model, Cmd Msg )
 urlUpdate location model =
     case decode location of
         Nothing ->
@@ -102,8 +92,6 @@ signIn signInForm =
     in
         Http.post "/web/sign_in" body Decode.value
 
-
--- VIEW
 
 view : Model -> Html Msg
 view model =

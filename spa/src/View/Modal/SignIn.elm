@@ -50,8 +50,9 @@ view model =
                                 , class "form-control"
                                 , id "userId"
                                 , placeholder "User Id"
-                                , attribute "autocomplete" "username"
+                                , autocomplete False
                                 , onInput SignInFormUserId
+                                , value model.signInForm.userId
                                 ] []
                             ]
                         , div [ class "form-group" ]
@@ -61,8 +62,9 @@ view model =
                                 , class "form-control"
                                 , id "password"
                                 , placeholder "Password"
-                                , attribute "autocomplete" "current-password"
+                                , autocomplete False
                                 , onInput SignInFormPassword
+                                , value model.signInForm.password
                                 ] []
                             ]
                         , button
@@ -75,4 +77,3 @@ view model =
                 ]
             ]
         ]
-
